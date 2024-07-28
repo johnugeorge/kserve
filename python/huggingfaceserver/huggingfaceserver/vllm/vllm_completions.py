@@ -418,6 +418,7 @@ class OpenAIServingCompletion:
 
         for i, token_id in enumerate(token_ids):
             step_top_logprobs = top_logprobs[i]
+<<<<<<< HEAD
             if step_top_logprobs is None:
                 token = self.tokenizer.decode(token_id)
                 logprobs.tokens.append(token)
@@ -444,10 +445,19 @@ class OpenAIServingCompletion:
                     }
                 )
 
+=======
+            if step_top_logprobs is not None:
+                token_logprob = step_top_logprobs[token_id].logprob
+                token = step_top_logprobs[token_id].decoded_token
+                logprobs.tokens.append(token)
+                last_token_len = len(token)
+            else:
+                token_logprob = None
+            logprobs.token_logprobs.append(token_logprob)
+>>>>>>> release-0.13
             if len(logprobs.text_offset) == 0:
                 logprobs.text_offset.append(initial_text_offset)
             else:
                 logprobs.text_offset.append(logprobs.text_offset[-1] + last_token_len)
-            last_token_len = len(token)
 
         return logprobs
