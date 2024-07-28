@@ -448,5 +448,6 @@ class OpenAIServingCompletion:
                 logprobs.text_offset.append(initial_text_offset)
             else:
                 logprobs.text_offset.append(logprobs.text_offset[-1] + last_token_len)
+            last_token_len = len(token)
 
         return logprobs
